@@ -4,7 +4,7 @@
 [![GitHub actions status](https://github.com/LanderDC/SKA-analysis/workflows/Tests/badge.svg?branch=main)](https://github.com/LanderDC/SKA-analysis/actions?query=branch%3Amain+workflow%3ATests)
 
 
-A Snakemake workflow for `the analysis of NGS reads with SKA (Harris, 2018) to identify the (mosquito) species of different samples.`
+A Snakemake workflow for the analysis of NGS reads with SKA (Harris, 2018) to identify the (mosquito) species of different samples.
 
 
 ## Usage
