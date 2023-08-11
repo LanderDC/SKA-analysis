@@ -1,0 +1,10 @@
+samples:
+  "samples.tsv"
+
+genome:
+  ".test/host_genome.fasta"
+
+study:
+  "study_name"
+
+threads: 5

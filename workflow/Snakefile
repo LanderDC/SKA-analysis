@@ -1,4 +1,112 @@
-# Main entrypoint of the workflow. 
-# Please follow the best practices: 
+# Main entrypoint of the workflow.
+# Please follow the best practices:
 # https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
-# in particular regarding the standardized folder structure mentioned there. 
+# in particular regarding the standardized folder structure mentioned there.
+import os
+import pandas as pd
+import itertools
+
+
+configfile: "config/config.yaml"
+
+
+samples = (
+    pd.read_csv(
+        config["samples"],
+        sep="\t",
+        dtype={"sample": str, "fq1": str, "fq2": str},
+        comment="#",
+    )
+    .set_index("sample", drop=False)
+    .sort_index()
+)
+
+# def get_input_fastqs(wildcards):
+#    return config["samples"][wildcards.sample]
+
+SAMPLE = samples["sample"].tolist()
+
+
+wildcard_constraints:
+    sample="|".join(samples["sample"]),
+
+
+rule all:
+    input:
+        "results/ska.distances.tsv",
+
+
+rule map_reads:
+    input:
+        ref=config["genome"],
+        read1=samples["fq1"],
+        read2=samples["fq2"],
+    output:
+        "mapped_reads/{sample}.sam",
+    threads: config["threads"]
+    shell:
+        "bowtie2 --sensitive -p {threads} -x {input.ref} -1 {input.read1} -2 {input.read2} -S {output}"
+
+
+rule samtools_sort:
+    input:
+        "mapped_reads/{sample}.sam",
+    output:
+        protected("sorted_bam/{sample}.sorted.bam"),
+    threads: config["threads"]
+    shell:
+        "samtools view -bS {input} |"
+        "samtools view -b -F12 - |"
+        "samtools sort -n - -o {output} -@ {threads}"
+
+
+rule output_fastq:
+    input:
+        "sorted_bam/{sample}.sorted.bam",
+    output:
+        read1="mapped_reads/{sample}.mapped.R1.fastq",
+        read2="mapped_reads/{sample}.mapped.R2.fastq",
+    threads: config["threads"]
+    shell:
+        "samtools fastq  -1 {output.read1} -2 {output.read2} -@ {threads};"
+        "pigz -9 {output.read1};"
+        "pigz -9 {output.read2}"
+
+
+rule ska_fastq:
+    input:
+        read1="mapped_reads/{sample}.mapped.R1.fastq",
+        read2="mapped_reads/{sample}.mapped.R2.fastq",
+    output:
+        "skf_files/{sample}.skf",
+    params:
+        name="{sample}",
+    shell:
+        "ska fastq -o skf_files/{params.name} {input.read1} {input.read2}"
+
+
+rule ska_distance:
+    input:
+        file1="skf_files/{sample1}.skf",
+        file2="skf_files/{sample2}.skf",
+    output:
+        "results/{sample1}_{sample2}.distances.tsv",
+    params:
+        name="{sample1}_{sample2}",
+    shell:
+        "ska distance -c -o {params.name} {input.file1} {input.file2}"
+
+
+combs = []
+for x in itertools.combinations(SAMPLE, 2):
+    combs.append("results/%s_%s.distances.tsv" % (x[0], x[1]))
+
+
+rule cat_distance_files:
+    input:
+        combs,
+    output:
+        "results/ska.distances.tsv",
+    shell:
+        #"cat {input} > {output}" #better cat, print header and remove from all files
+        "awk 'NR < 2 {print $0 ; next} !/^#/{print $0}' {input} > {output}"
