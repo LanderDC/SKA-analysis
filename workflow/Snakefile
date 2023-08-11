@@ -46,6 +46,8 @@ rule map_reads:
     threads: config["threads"]
     log:
         "logs/bowtie/{sample}.log",
+    conda:
+        "envs/bowtie.yaml"
     shell:
         "(bowtie2 --sensitive -p {threads} -x {input.ref} -1 {input.read1} -2 {input.read2} -S {output}) > {log}"
 
@@ -58,6 +60,8 @@ rule samtools_sort:
     threads: config["threads"]
     log:
         "logs/samtools_sort/{sample}.log",
+    conda:
+        "envs/samtools.yaml"
     shell:
         "(samtools view -bS {input} |"
         "samtools view -b -F12 - |"
@@ -73,6 +77,8 @@ rule output_fastq:
     threads: config["threads"]
     log:
         "logs/output_fastq/{sample}.log",
+    conda:
+        "envs/samtools.yaml"
     shell:
         "(samtools fastq  -1 {output.read1} -2 {output.read2} -@ {threads};"
         "pigz -9 {output.read1};"
@@ -90,6 +96,8 @@ rule ska_fastq:
     threads: 1
     log:
         "logs/ska_fastq/{sample}.log",
+    conda:
+        "envs/ska.yaml"
     shell:
         "(ska fastq -o results/skf_files/{params.name} {input.read1} {input.read2}) > {log}"
 
@@ -105,6 +113,8 @@ rule ska_distance:
     threads: 1
     log:
         "logs/ska_distance/{sample1}_{sample2}.log",
+    conda:
+        "envs/ska.yaml"
     shell:
         "(ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > (log)"
 
