@@ -1,0 +1,5 @@
+sample	fq1	fq2
+sample1	.test/sample1.R1.fastq.gz	.test/sample1.R2.fastq.gz
+sample2	.test/sample2.R1.fastq.gz	.test/sample2.R2.fastq.gz
+sample3	.test/sample3.R1.fastq.gz	.test/sample3.R2.fastq.gz
+sample4	.test/sample4.R1.fastq.gz	.test/sample4.R2.fastq.gz

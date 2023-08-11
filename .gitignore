@@ -4,5 +4,4 @@ logs/**
 .snakemake
 .snakemake/**
 tutorial.smk
-.test
 *.ipynb
