@@ -10,10 +10,6 @@ import itertools
 configfile: "config/config.yaml"
 
 
-wildcard_constraints:
-    sample="|".join(samples["sample"]),
-
-
 include: "rules/common.smk"
 
 

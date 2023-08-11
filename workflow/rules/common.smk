@@ -14,6 +14,11 @@ samples = (
 
 SAMPLE = samples["sample"].tolist()
 
+
+wildcard_constraints:
+    sample="|".join(samples["sample"]),
+
+
 combs = []
 for x in itertools.combinations(SAMPLE, 2):
     combs.append("results/distances/%s_%s.distances.tsv" % (x[0], x[1]))
