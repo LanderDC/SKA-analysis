@@ -11,4 +11,4 @@ A Snakemake workflow for the analysis of NGS reads with SKA (Harris, 2018) to id
 
 The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=LanderDC%2FSKA-analysis).
 
-If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) SKA-analysissitory and its DOI (see above).
+If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) repository and its DOI (see above).
