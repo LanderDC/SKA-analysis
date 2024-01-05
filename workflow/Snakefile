@@ -98,7 +98,7 @@ rule ska_distance:
     conda:
         "envs/ska.yaml"
     shell:
-        "(ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > (log)"
+        "(ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > {log}"
 
 
 rule cat_distance_files:
