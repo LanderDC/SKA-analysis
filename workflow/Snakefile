@@ -26,6 +26,8 @@ rule map_reads:
     output:
         temp("results/mapped_reads/{sample}.sam"),
     threads: config["threads"]
+    group:
+        "mygroup"
     log:
         "logs/bowtie/{sample}.log",
     conda:
@@ -40,6 +42,8 @@ rule samtools_sort:
     output:
         protected("results/sorted_bam/{sample}.sorted.bam"),
     threads: config["threads"]
+    group:
+        "mygroup"
     log:
         "logs/samtools_sort/{sample}.log",
     conda:
@@ -57,6 +61,8 @@ rule output_fastq:
         read1="results/mapped_reads/{sample}.mapped.R1.fastq",
         read2="results/mapped_reads/{sample}.mapped.R2.fastq",
     threads: config["threads"]
+    group:
+        "mygroup"
     log:
         "logs/output_fastq/{sample}.log",
     conda:
@@ -76,6 +82,8 @@ rule ska_fastq:
     params:
         name="{sample}",
     threads: 1
+    group:
+        "mygroup"
     log:
         "logs/ska_fastq/{sample}.log",
     conda:
