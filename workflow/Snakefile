@@ -20,8 +20,8 @@ rule all:
 
 rule map_reads:
     input:
-        read1=samples["fq1"],
-        read2=samples["fq2"],
+        read1=samples.loc["{sample}", "fq1"],
+        read2=samples.loc["{sample}", "fq2"],
     output:
         temp("results/mapped_reads/{sample}.sam"),
     params:
