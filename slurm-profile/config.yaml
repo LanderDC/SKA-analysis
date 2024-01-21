@@ -2,7 +2,7 @@ cluster:
   mkdir -p logs/{rule} &&
   sbatch
     --clusters={resources.cluster}
-    -n {resource.threads}
+    -n {threads}
     --mem-per-cpu={resources.mem_mb_per_cpu}
     --partition={resources.partition}
     --job-name=smk-{rule}-{wildcards}
@@ -16,22 +16,20 @@ default-resources:
   - mem_mb_per_cpu=3400
   - runtime=60
   - partition=batch
-  - threads={threads}
 set-resources:
   - ska_fastq:mem_mb_per_cpu=28000
-  - ska_distance:mem_mb_per_cpu=28000
+  - ska_distance:mem_mb_per_cpu=14000
   - ska_distance:runtime=4320
-  - ska_distance:partition=bigmem
-  - ska_distance:threads=36
+  - ska_distance:partition=batch
 groups:
   - ska_distance=group1
 group-components:
-  - group1=625
+  - group1=15
 restart-times: 3
 max-jobs-per-second: 10
 max-status-checks-per-second: 1
 local-cores: 1
-latency-wait: 60
+latency-wait: 30
 jobs: 100
 keep-going: True
 rerun-incomplete: True
