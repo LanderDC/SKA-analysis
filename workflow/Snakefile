@@ -20,8 +20,8 @@ rule all:
 
 rule map_reads:
     input:
-        read1=samples.loc["{sample}", "fq1"],
-        read2=samples.loc["{sample}", "fq2"],
+        read1=lambda wildcards: samples.loc[wildcards.sample, "fq1"],
+        read2=lambda wildcards: samples.loc[wildcards.sample, "fq2"],
     output:
         temp("results/mapped_reads/{sample}.sam"),
     params:
