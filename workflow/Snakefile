@@ -68,15 +68,15 @@ rule output_fastq:
     conda:
         "envs/samtools.yaml"
     shell:
-        "(samtools fastq  -1 {output.read1} -2 {output.read2} -@ {threads};"
+        "(samtools fastq  -1 {output.read1} -2 {output.read2} {input} -@ {threads};"
         "pigz -9 {output.read1};"
         "pigz -9 {output.read2}) > {log}"
 
 
 rule ska_fastq:
     input:
-        read1="results/mapped_reads/{sample}.mapped.R1.fastq",
-        read2="results/mapped_reads/{sample}.mapped.R2.fastq",
+        read1="results/mapped_reads/{sample}.mapped.R1.fastq.gz",
+        read2="results/mapped_reads/{sample}.mapped.R2.fastq.gz",
     output:
         "results/skf_files/{sample}.skf",
     params:
