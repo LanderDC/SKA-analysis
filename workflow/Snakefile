@@ -24,9 +24,9 @@ rule map_reads:
         read2=samples["fq2"],
     output:
         temp("results/mapped_reads/{sample}.sam"),
-    threads: config["threads"]
     params:
         ref=config["genome"],
+    threads: config["threads"]
     group:
         "mygroup"
     log:
@@ -59,6 +59,9 @@ rule output_fastq:
     input:
         "results/sorted_bam/{sample}.sorted.bam",
     output:
+        read1="results/mapped_reads/{sample}.mapped.R1.fastq.gz",
+        read2="results/mapped_reads/{sample}.mapped.R2.fastq.gz",
+    params:
         read1="results/mapped_reads/{sample}.mapped.R1.fastq",
         read2="results/mapped_reads/{sample}.mapped.R2.fastq",
     threads: config["threads"]
@@ -69,15 +72,15 @@ rule output_fastq:
     conda:
         "envs/samtools.yaml"
     shell:
-        "(samtools fastq  -1 {output.read1} -2 {output.read2} {input} -@ {threads};"
-        "pigz -9 {output.read1};"
-        "pigz -9 {output.read2}) > {log}"
+        "(samtools fastq  -1 {params.read1} -2 {params.read2} {input} -@ {threads};"
+        "pigz -9 {params.read1};"
+        "pigz -9 {params.read2}) > {log}"
 
 
 rule ska_fastq:
     input:
-        read1="results/mapped_reads/{sample}.mapped.R1.fastq",
-        read2="results/mapped_reads/{sample}.mapped.R2.fastq",
+        read1="results/mapped_reads/{sample}.mapped.R1.fastq.gz",
+        read2="results/mapped_reads/{sample}.mapped.R2.fastq.gz",
     output:
         "results/skf_files/{sample}.skf",
     params:
@@ -90,7 +93,7 @@ rule ska_fastq:
     conda:
         "envs/ska.yaml"
     shell:
-        "(ska fastq -o results/skf_files/{params.name} {input.read1}.gz {input.read2}.gz) > {log}"
+        "(ska fastq -o results/skf_files/{params.name} {input.read1} {input.read2}) > {log}"
 
 
 rule ska_distance:
