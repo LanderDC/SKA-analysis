@@ -2,9 +2,9 @@ samples:
   "samples.tsv"
 
 genome:
-  ".test/host_genome.fasta"
+  "/staging/leuven/stg_00029/DB/mosquito_genome/combined_mg"
 
 study:
-  "study_name"
+  "C1_project"
 
-threads: 5
+threads: 36
