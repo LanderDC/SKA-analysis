@@ -28,7 +28,7 @@ rule map_reads:
         ref=config["genome"],
     threads: config["threads"]
     group:
-        "mygroup"
+        "group0"
     log:
         "logs/bowtie/{sample}.log",
     conda:
@@ -44,7 +44,7 @@ rule samtools_sort:
         protected("results/sorted_bam/{sample}.sorted.bam"),
     threads: config["threads"]
     group:
-        "mygroup"
+        "group0"
     log:
         "logs/samtools_sort/{sample}.log",
     conda:
@@ -66,7 +66,7 @@ rule output_fastq:
         read2="results/mapped_reads/{sample}.mapped.R2.fastq",
     threads: config["threads"]
     group:
-        "mygroup"
+        "group0"
     log:
         "logs/output_fastq/{sample}.log",
     conda:
