@@ -50,9 +50,11 @@ rule samtools_sort:
     conda:
         "envs/samtools.yaml"
     shell:
-        "(samtools view -bS {input} |"
-        "samtools view -b -F12 - |"
-        "samtools sort -n - -o {output} -@ {threads}) > {log}"
+        """
+        (samtools view -bS {input} |
+        samtools view -b -F12 - |
+        samtools sort -n - -o {output} -@ {threads}) > {log}
+        """
 
 
 rule output_fastq:
@@ -72,9 +74,11 @@ rule output_fastq:
     conda:
         "envs/samtools.yaml"
     shell:
-        "(samtools fastq  -1 {params.read1} -2 {params.read2} {input} -@ {threads};"
-        "pigz -9 {params.read1};"
-        "pigz -9 {params.read2}) > {log}"
+        """
+        (samtools fastq  -1 {params.read1} -2 {params.read2} {input} -@ {threads}
+        pigz -9 {params.read1}
+        pigz -9 {params.read2}) > {log}
+        """
 
 
 rule ska_fastq:
@@ -108,7 +112,10 @@ rule ska_distance:
     conda:
         "envs/ska.yaml"
     shell:
-        "(ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > {log}"
+        """
+        (ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > {log}
+        rm {params.name}.dot
+        """
 
 
 rule cat_distance_files:
