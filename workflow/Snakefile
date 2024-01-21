@@ -87,7 +87,7 @@ rule ska_fastq:
         name="{sample}",
     threads: 1
     resources:
-        mem_mb=28000,
+        mem_mb=128000,
     group:
         "mygroup"
     log:
@@ -122,6 +122,8 @@ rule cat_distance_files:
         combs,
     output:
         "results/ska.distances.tsv",
+    resources:
+        mem_mb=5000,
     log:
         "logs/ska_distance/cat_distance_files.log",
     conda:
