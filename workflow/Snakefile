@@ -76,8 +76,8 @@ rule output_fastq:
 
 rule ska_fastq:
     input:
-        read1="results/mapped_reads/{sample}.mapped.R1.fastq.gz",
-        read2="results/mapped_reads/{sample}.mapped.R2.fastq.gz",
+        read1="results/mapped_reads/{sample}.mapped.R1.fastq",
+        read2="results/mapped_reads/{sample}.mapped.R2.fastq",
     output:
         "results/skf_files/{sample}.skf",
     params:
@@ -90,7 +90,7 @@ rule ska_fastq:
     conda:
         "envs/ska.yaml"
     shell:
-        "(ska fastq -o results/skf_files/{params.name} {input.read1} {input.read2}) > {log}"
+        "(ska fastq -o results/skf_files/{params.name} {input.read1}.gz {input.read2}.gz) > {log}"
 
 
 rule ska_distance:
