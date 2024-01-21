@@ -2,8 +2,9 @@ cluster:
   mkdir -p logs/{rule} &&
   sbatch
     --clusters={resources.cluster}
-    -n {threads}
+    -n {resource.threads}
     --mem-per-cpu={resources.mem_mb_per_cpu}
+    --partition={resources.partition}
     --job-name=smk-{rule}-{wildcards}
     --output=logs/{rule}/{rule}-{wildcards}-%j.out
     -A lp_jm_virome_group
@@ -13,11 +14,19 @@ cluster:
 default-resources:
   - cluster=genius
   - mem_mb_per_cpu=3400
-  - runtime=100
+  - runtime=60
+  - partition=batch
+  - threads={threads}
 set-resources:
   - ska_fastq:mem_mb_per_cpu=28000
   - ska_distance:mem_mb_per_cpu=28000
-  - ska_distance:runtime=5
+  - ska_distance:runtime=4320
+  - ska_distance:partition=bigmem
+  - ska_distance:threads=36
+groups:
+  - ska_distance=group1
+group-components:
+  - group1=625
 restart-times: 3
 max-jobs-per-second: 10
 max-status-checks-per-second: 1
@@ -33,7 +42,4 @@ jobscript: scripts/jobscript_template.sh
 cluster-cancel: 'scancel'
 immediate-submit: False
 notemp: False
-groups:
-  - ska_distance=group1
-group-components:
-  - group1=625
+
