@@ -20,12 +20,13 @@ rule all:
 
 rule map_reads:
     input:
-        ref=config["genome"],
         read1=samples["fq1"],
         read2=samples["fq2"],
     output:
         temp("results/mapped_reads/{sample}.sam"),
     threads: config["threads"]
+    params:
+        ref=config["genome"],
     group:
         "mygroup"
     log:
@@ -33,7 +34,7 @@ rule map_reads:
     conda:
         "envs/bowtie.yaml"
     shell:
-        "(bowtie2 --sensitive -p {threads} -x {input.ref} -1 {input.read1} -2 {input.read2} -S {output}) > {log}"
+        "(bowtie2 --sensitive -p {threads} -x {params.ref} -1 {input.read1} -2 {input.read2} -S {output}) > {log}"
 
 
 rule samtools_sort:

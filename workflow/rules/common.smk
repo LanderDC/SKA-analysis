@@ -17,6 +17,8 @@ SAMPLE = samples["sample"].tolist()
 
 wildcard_constraints:
     sample="|".join(samples["sample"]),
+    sample1="|".join(samples["sample"]),
+    sample2="|".join(samples["sample"]),
 
 
 combs = []
