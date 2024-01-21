@@ -87,7 +87,7 @@ rule ska_fastq:
         name="{sample}",
     threads: 1
     resources:
-        mem_mb: 28000
+        mem_mb=28000,
     group:
         "mygroup"
     log:
@@ -108,7 +108,7 @@ rule ska_distance:
         name="{sample1}_{sample2}",
     threads: 1
     resources:
-        mem_mb: 28000
+        mem_mb=28000,
     log:
         "logs/ska_distance/{sample1}_{sample2}.log",
     conda:
