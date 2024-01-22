@@ -114,7 +114,7 @@ rule ska_distance:
         "envs/ska.yaml"
     shell:
         """
-        (ska distance -c -o results/distances/{params.name} {input.file1} {input.file2}) > {log}
+        (ska distance -c -o results/distances/{params.name} {input}) > {log}
         rm {params.name}.dot
         """
 

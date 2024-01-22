@@ -69,8 +69,7 @@ input_df["sample_list"] = input_df["sample_list"].apply(clean_list)
 
 input_df["iteration"] = "iteration" + input_df.index.astype(str)
 
-distance_files = [item + ".distances.tsv" for item in input_df.loc[:, "iteration"]]
-
+distance_files = ["results/distances/" + item + ".distances.tsv" for item in input_df.loc[:, "iteration"]]
 
 wildcard_constraints:
     sample="|".join(samples["sample"]),
