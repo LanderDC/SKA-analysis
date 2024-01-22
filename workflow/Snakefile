@@ -102,7 +102,7 @@ rule ska_fastq:
 
 rule ska_distance:
     input:
-        input_df.loc[input_df["iteration"] == "{iteration}"]["sample_list"],
+        lambda wildcards: input_df.loc[wildcards.iteration, "sample_list"],
     output:
         "results/distances/{iteration}.distances.tsv",
     params:
@@ -115,7 +115,7 @@ rule ska_distance:
     shell:
         """
         (ska distance -c -o results/distances/{params.name} {input}) > {log}
-        rm {params.name}.dot
+        rm results/distances/{params.name}.dot
         """
 
 

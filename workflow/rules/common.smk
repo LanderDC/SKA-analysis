@@ -62,12 +62,14 @@ for _ in range(num_rows - 1):
 
 # Function to remove empty strings from a list
 def clean_list(original_list):
-    return [item + ".skf" for item in original_list if item != ""]
+    return ["results/skf_files/" + item + ".skf" for item in original_list if item != ""]
 
 
 input_df["sample_list"] = input_df["sample_list"].apply(clean_list)
 
 input_df["iteration"] = "iteration" + input_df.index.astype(str)
+
+input_df.set_index('iteration', inplace=True, drop=False)
 
 distance_files = ["results/distances/" + item + ".distances.tsv" for item in input_df.loc[:, "iteration"]]
 
