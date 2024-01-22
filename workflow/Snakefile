@@ -5,6 +5,8 @@
 import os
 import pandas as pd
 import itertools
+import math
+import numpy as np
 
 
 configfile: "config/config.yaml"
@@ -100,15 +102,14 @@ rule ska_fastq:
 
 rule ska_distance:
     input:
-        file1="results/skf_files/{sample1}.skf",
-        file2="results/skf_files/{sample2}.skf",
+        input_df.loc[input_df["iteration"] == "{iteration}"]["sample_list"],
     output:
-        "results/distances/{sample1}_{sample2}.distances.tsv",
+        "results/distances/{iteration}.distances.tsv",
     params:
-        name="{sample1}_{sample2}",
+        name="{iteration}",
     threads: 1
     log:
-        "logs/ska_distance/{sample1}_{sample2}.log",
+        "logs/ska_distance/{iteration}.log",
     conda:
         "envs/ska.yaml"
     shell:
@@ -120,7 +121,7 @@ rule ska_distance:
 
 rule cat_distance_files:
     input:
-        combs,
+        distance_files,
     output:
         "results/ska.distances.tsv",
     log:
