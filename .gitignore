@@ -1,10 +1,13 @@
+samples.tsv
 results/**
 resources/**
 logs/**
+*.log
 .snakemake
 .snakemake/**
 tutorial.smk
 *.ipynb
+*.slurm
 
 .DS_Store
 
