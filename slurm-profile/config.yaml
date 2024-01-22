@@ -18,13 +18,9 @@ default-resources:
   - partition=batch
 set-resources:
   - ska_fastq:mem_mb_per_cpu=28000
-  - ska_distance:mem_mb_per_cpu=14000
-  - ska_distance:runtime=4320
+  - ska_distance:mem_mb_per_cpu=150000
+  - ska_distance:runtime=1440
   - ska_distance:partition=batch
-groups:
-  - ska_distance=group1
-group-components:
-  - group1=15
 restart-times: 3
 max-jobs-per-second: 10
 max-status-checks-per-second: 1
