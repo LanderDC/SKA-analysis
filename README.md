@@ -1,14 +1,17 @@
 # Snakemake workflow: `SKA-analysis`
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥6.3.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/LanderDC/SKA-analysis/workflows/Tests/badge.svg?branch=main)](https://github.com/LanderDC/SKA-analysis/actions?query=branch%3Amain+workflow%3ATests)
 
 
 A Snakemake workflow for the analysis of NGS reads with SKA (Harris, 2018) to identify the (mosquito) species of different samples.
 
 
 ## Usage
+### Quick usage
 
-The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/?usage=LanderDC%2FSKA-analysis).
+Make sure to have a tab-separated file that contains your sample name in the first column (`sample`), forward read paths in the second column (`fq1`) and the reverse read paths in the third (`fq2`). For an example see the `samples.tsv` file.
 
-If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) repository and its DOI (see above).
+```bash
+snakemake --profile slurm-profile/
+```
+

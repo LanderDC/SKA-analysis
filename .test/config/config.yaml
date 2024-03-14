@@ -1,7 +1,0 @@
-samples:
-  "config/samples.tsv"
-
-genome:
-  ".test/host_genome.fasta"
-
-threads: 5
