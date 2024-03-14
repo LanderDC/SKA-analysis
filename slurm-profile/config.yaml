@@ -10,6 +10,7 @@ cluster:
     -A lp_jm_virome_group
     -t {resources.runtime}
     -N 1
+    --parsable
     # $(./scripts/parseJobID.sh {dependencies})
 default-resources:
   - cluster=genius
