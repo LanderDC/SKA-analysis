@@ -2,9 +2,6 @@ samples:
   "samples.tsv"
 
 genome:
-  "/staging/leuven/stg_00029/DB/mosquito_genome/combined_mg"
-
-study:
-  "C1_project"
+  "path/to/genome"
 
 threads: 36
