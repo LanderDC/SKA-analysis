@@ -4,5 +4,5 @@ channels:
 - bioconda
 - defaults
 dependencies:
-- samtools
-- pigz
+- samtools=1.19
+- pigz=2.6
