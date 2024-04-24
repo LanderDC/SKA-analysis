@@ -69,6 +69,9 @@ def clean_list(original_list):
 
 input_df["sample_list"] = input_df["sample_list"].apply(clean_list)
 
+# Only select rows that have more than 1 sample
+# Necessary because the matrix generation on line 29 can cause empty rows
+# because of the square root calculations
 input_df = input_df[input_df["sample_list"].apply(len) > 1]
 
 input_df["iteration"] = "iteration" + input_df.index.astype(str)
