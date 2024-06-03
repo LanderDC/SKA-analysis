@@ -1,6 +1,6 @@
 # Snakemake workflow: `SKA-analysis`
 
-[![Snakemake](https://img.shields.io/badge/snakemake-≥6.3.0-brightgreen.svg)](https://snakemake.github.io)
+[![Snakemake](https://img.shields.io/badge/snakemake-%E2%89%A56.3.0|%3C8.0.0-brightgreen.svg)](https://snakemake.github.io)
 
 
 A Snakemake workflow for the analysis of NGS reads with SKA (Harris, 2018) to identify the (mosquito) species of different samples.
